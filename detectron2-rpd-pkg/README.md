@@ -1,3 +1,7 @@
+-------------------------------------
+nvidia-docker run -it --rm -m=2g -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data3/:/data -v ~/projects/rpd/out/:/out -v ~/projects/rpd/extracted/:/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /sample_data_folder --extracted_dir /extracted
+
+-------------------------------------
 Setting up Detectron2-RPD for Windows
 
 Prerequisites: Git and CUDA 10.2, which can be downloaded directly [here](https://git-scm.com/download/win) and [here](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Windows&target_arch=x86_64) (use the default options when installing).

@@ -1,4 +1,6 @@
 -------------------------------------
+nvidia-docker run -it --rm --user $(id -u):$(id -g) -m=2g -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data3/:/workspace/data -v ~/projects/rpd/out/:/workspace/out -v ~/projects/rpd/extracted/:/workspace/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /workspace/sample_data_folder --extracted_dir /workspace/extracted --output_dir /workspace/out
+
 nvidia-docker run -it --rm -m=2g -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data3/:/data -v ~/projects/rpd/out/:/out -v ~/projects/rpd/extracted/:/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /sample_data_folder --extracted_dir /extracted
 
 -------------------------------------

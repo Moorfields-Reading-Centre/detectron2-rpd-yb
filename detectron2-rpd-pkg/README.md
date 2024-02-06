@@ -1,5 +1,24 @@
 -------------------------------------
-nvidia-docker run -it --rm --user $(id -u):$(id -g) -m=2g -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data3/:/workspace/data -v ~/projects/rpd/out/:/workspace/out -v ~/projects/rpd/extracted/:/workspace/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /workspace/sample_data_folder --extracted_dir /workspace/extracted --output_dir /workspace/out
+# Tue 6 Feb
+
+current issue:
+in run_program.py
+model = build_model(cfg)  # returns a torch.nn.Module
+returns "killed"
+
+TODOs:
+1. Edit dockerfile
+projects/rpd/detectron2-rpd-yb/Dockerfile
+Edit version
+pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+2. clone the latest detectron2 repo
+use the model from the following.
+https://s3.us-west-2.amazonaws.com/comp.ophthalmology.uw.edu/models.zip
+
+
+nvidia-docker run -it --rm --user $(id -u):$(id -g) -m=2g --gpus '"device=0"' -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data/:/workspace/data/data_folder -v ~/projects/rpd/out/:/workspace/data/out -v ~/projects/rpd/extracted/:/workspace/data/extracted rpd python run_program.py --config options-template.ini --input_dir /workspace/data/data_folder --extracted_dir /workspace/data/extracted --output_dir /workspace/data/out
+
+nvidia-docker run -it --rm --user $(id -u):$(id -g) -m=2g --gpus '"device=0"' -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data/:/workspace/data/data_folder -v ~/projects/rpd/out/:/workspace/data/out -v ~/projects/rpd/extracted/:/workspace/data/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /workspace/data/data_folder --extracted_dir /workspace/data/extracted --output_dir /workspace/data/out
 
 nvidia-docker run -it --rm -m=2g -v ~/projects/rpd/detectron2-rpd-yb/detectron2-rpd-pkg/src/detectron2-rpd:/workspace -v ~/projects/rpd/test_data3/:/data -v ~/projects/rpd/out/:/out -v ~/projects/rpd/extracted/:/extracted rpd python -m pdb -c continue run_program.py --config options-template.ini --input_dir /sample_data_folder --extracted_dir /extracted
 

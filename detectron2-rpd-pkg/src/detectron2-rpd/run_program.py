@@ -1,3 +1,4 @@
+import pdb
 import datasets.data as data
 import pickle
 from detectron2.config import get_cfg
@@ -65,18 +66,28 @@ def register_dataset(dataset_name):
         MetadataCatalog.get(name).thing_classes = ["rpd"]
 
 def run_prediction(cfg, dataset_name, output_path):
+    print("start function run_prediction")
+    print("cfg: ", cfg)
+    pdb.set_trace()
     model = build_model(cfg)  # returns a torch.nn.Module
+    print("model")
     myloader = build_detection_test_loader(cfg,dataset_name) 
+    print("myloader")
     myeval = COCOEvaluator(dataset_name,tasks={'bbox','segm'},output_dir =output_path) #produces _coco_format.json when initialized
+    print("myeval")
     for mdl in ("fold1", "fold2", "fold3", "fold4","fold5"):
+        print(f"mdl: {mdl}")
         extract_directory = 'Models'
         if not os.path.isdir(extract_directory):
+            print("Models directory does not exist! Making models directory...")
             os.mkdir(extract_directory)
             url = 'https://s3.us-west-2.amazonaws.com/comp.ophthalmology.uw.edu/models.zip'
             path_to_zip_file, headers = urllib.request.urlretrieve(url, reporthook = MyProgressBar())
             with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
                 zip_ref.extractall(extract_directory)
+        print("Loading model weights...")
         file_name = mdl + "_model_final.pth"
+        print(file_name)
         model_weights_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), extract_directory, file_name)
         print(model_weights_path)
         DetectionCheckpointer(model).load(model_weights_path) # load a file, usually from cfg.MODEL.WEIGHTS
